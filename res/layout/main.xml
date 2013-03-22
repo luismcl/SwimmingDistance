@@ -1,0 +1,116 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent"
+    android:orientation="vertical" >
+
+    <TextView
+        android:id="@+id/tvFace"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:text="Face UP" />
+
+    <TextView
+        android:id="@+id/tvLapsLabel"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/face"
+        android:layout_marginTop="15dp"
+        android:text="Laps:"
+        android:textAppearance="?android:attr/textAppearanceSmall" />
+
+    <TextView
+        android:id="@+id/tvLaps"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignBaseline="@+id/tvLapsLabel"
+        android:layout_alignBottom="@+id/tvLapsLabel"
+        android:layout_marginLeft="15dp"
+        android:layout_toRightOf="@+id/tvLapsLabel"
+        android:text="0" />
+
+    <TextView
+        android:id="@+id/tvDistanceLabel"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentLeft="true"
+        android:layout_below="@+id/tvLapsLabel"
+        android:layout_marginTop="15dp"
+        android:text="Length Distance (meters):" />
+
+    <EditText
+        android:id="@+id/etDistance"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentLeft="true"
+        android:layout_below="@+id/tvDistanceLabel"
+        android:ems="10"
+        android:inputType="number"
+        android:text="25" />
+
+    <TextView
+        android:id="@+id/tvDistSwLabel"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentLeft="true"
+        android:layout_below="@+id/etDistance"
+        android:layout_marginTop="16dp"
+        android:text="Total Distance:" />
+
+    <TextView
+        android:id="@+id/tvDistSw"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignBaseline="@+id/tvDistSwLabel"
+        android:layout_alignBottom="@+id/tvDistSwLabel"
+        android:layout_toRightOf="@+id/tvDistSwLabel"
+        android:layout_marginLeft="15dp"
+        android:text="0 mts." />
+
+    <TextView
+        android:id="@+id/tvSpeedLabel"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentLeft="true"
+        android:layout_below="@+id/tvDistSwLabel"
+        android:layout_marginTop="15dp"
+        android:text="Speed:" />
+
+    <TextView
+        android:id="@+id/tvSpeed"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignBaseline="@+id/tvSpeedLabel"
+        android:layout_alignBottom="@+id/tvSpeedLabel"
+        android:layout_marginLeft="15dp"
+        android:layout_toRightOf="@+id/tvSpeedLabel"
+        android:text="0 m/s" />
+
+    <CheckBox
+        android:id="@+id/cbSound"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:layout_alignParentLeft="true"
+        android:text="Sound" />
+
+    <TextView
+        android:id="@+id/tvTotalDistLabel"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentLeft="true"
+        android:layout_below="@+id/tvSpeedLabel"
+        android:layout_marginTop="15dp"
+        android:text="TextView" />
+
+    <EditText
+        android:id="@+id/etTotalDist"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentLeft="true"
+        android:layout_below="@+id/tvTotalDistLabel"
+        android:layout_marginTop="15dp"
+        android:text="1500"
+        android:ems="10" />
+
+</RelativeLayout>
