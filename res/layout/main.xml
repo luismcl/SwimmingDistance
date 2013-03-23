@@ -113,4 +113,12 @@
         android:text="1500"
         android:ems="10" />
 
+    <Button
+        android:id="@+id/btSample"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:layout_alignParentRight="true"
+        android:text="Button" />
+
 </RelativeLayout>

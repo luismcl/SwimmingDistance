@@ -3,6 +3,7 @@ package com.nautka.swdist;
 import java.util.List;
 
 import android.app.Activity;
+import android.content.Context;
 import android.hardware.Sensor;
 import android.hardware.SensorEvent;
 import android.hardware.SensorEventListener;
@@ -12,9 +13,12 @@ import android.media.RingtoneManager;
 import android.net.Uri;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.View;
+import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.EditText;
 import android.widget.TextView;
+import android.widget.Toast;
 
 public class SwimmingDistanceActivity extends Activity {
  
@@ -42,23 +46,19 @@ public class SwimmingDistanceActivity extends Activity {
 	long lastChangeDown = 0;
 	
 	//Layout Elements
+	Context rootContext;
 	TextView tvFace, tvLaps, tvDistSw, tvSpeed;
 	EditText etDistance, etTotalDist;
 	CheckBox cbSound;
+	Button btSample;
 	
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.main);
 
-		tvFace = (TextView)findViewById(R.id.tvFace);
-		tvLaps = (TextView)findViewById(R.id.tvLaps);
-		tvDistSw = (TextView)findViewById(R.id.tvDistSw);
-		tvSpeed = (TextView)findViewById(R.id.tvSpeed);
-		etDistance = (EditText)findViewById(R.id.etDistance);
-		etTotalDist = (EditText)findViewById(R.id.etTotalDist);
-		cbSound = (CheckBox)findViewById(R.id.cbSound);
-
+		setLayoutElements();
+		
 		sensorManager = (SensorManager)getSystemService(SENSOR_SERVICE);
 		List<Sensor> sensorList = sensorManager.getSensorList(Sensor.TYPE_ACCELEROMETER);
 		
@@ -93,6 +93,19 @@ public class SwimmingDistanceActivity extends Activity {
 		
 		if(accelerometerPresent)
 			sensorManager.unregisterListener(accelerometerListener);  
+	}
+	
+	public void setLayoutElements(){
+		rootContext = this;
+		tvFace = (TextView)findViewById(R.id.tvFace);
+		tvLaps = (TextView)findViewById(R.id.tvLaps);
+		tvDistSw = (TextView)findViewById(R.id.tvDistSw);
+		tvSpeed = (TextView)findViewById(R.id.tvSpeed);
+		etDistance = (EditText)findViewById(R.id.etDistance);
+		etTotalDist = (EditText)findViewById(R.id.etTotalDist);
+		cbSound = (CheckBox)findViewById(R.id.cbSound);
+		btSample = (Button) findViewById(R.id.btSample);		 
+		btSample.setOnClickListener(btSampleListener);
 	}
 	
 	public void playNotification(int _notificationType){
@@ -175,4 +188,10 @@ public class SwimmingDistanceActivity extends Activity {
 		}
 	};
 
+	View.OnClickListener btSampleListener = new View.OnClickListener() {      
+    	public void onClick(View v) {
+	        Toast.makeText(rootContext, "Button Pressed...", Toast.LENGTH_SHORT).show();
+	        
+    	}
+	};
 }

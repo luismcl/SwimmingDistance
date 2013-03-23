@@ -14,6 +14,7 @@ public final class R {
         public static final int ic_launcher=0x7f020000;
     }
     public static final class id {
+        public static final int btSample=0x7f05000d;
         public static final int cbSound=0x7f05000a;
         public static final int etDistance=0x7f050005;
         public static final int etTotalDist=0x7f05000c;
