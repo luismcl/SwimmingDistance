@@ -36,13 +36,14 @@
         android:layout_alignParentLeft="true"
         android:layout_below="@+id/tvLapsLabel"
         android:layout_marginTop="15dp"
-        android:text="Length Distance (meters):" />
+        android:text="@string/lbPollDist" />
 
     <EditText
         android:id="@+id/etDistance"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignParentLeft="true"
+        android:layout_alignRight="@+id/tvLaps"
         android:layout_below="@+id/tvDistanceLabel"
         android:ems="10"
         android:inputType="number"
@@ -94,31 +95,59 @@
         android:layout_alignParentLeft="true"
         android:text="Sound" />
 
-    <TextView
-        android:id="@+id/tvTotalDistLabel"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignParentLeft="true"
-        android:layout_below="@+id/tvSpeedLabel"
-        android:layout_marginTop="15dp"
-        android:text="TextView" />
-
     <EditText
         android:id="@+id/etTotalDist"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_alignParentLeft="true"
-        android:layout_below="@+id/tvTotalDistLabel"
-        android:layout_marginTop="15dp"
-        android:text="1500"
-        android:ems="10" />
+        android:layout_above="@+id/tvDistSwLabel"
+        android:layout_alignRight="@+id/tvTotalDistLabel"
+        android:layout_toRightOf="@+id/cbSound"
+        android:ems="10"
+        android:text="1500" />
 
-    <Button
-        android:id="@+id/btSample"
+    <TextView
+        android:id="@+id/tvTotalDistLabel"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_alignParentBottom="true"
+        android:layout_above="@+id/etTotalDist"
+        android:layout_toRightOf="@+id/cbSound"
+        android:text="@string/lblTripObj" />
+
+    <Button
+        android:id="@+id/btStart"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignRight="@+id/etDistance"
+        android:layout_below="@+id/tvSpeedLabel"
+        android:layout_marginTop="24dp"
+        android:text="@string/btStart" />
+
+    <Button
+        android:id="@+id/btReset"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignBaseline="@+id/btStop"
+        android:layout_alignBottom="@+id/btStop"
         android:layout_alignParentRight="true"
-        android:text="Button" />
+        android:layout_marginRight="24dp"
+        android:text="@string/btReset" />
+
+    <Button
+        android:id="@+id/btStop"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignBaseline="@+id/btStart"
+        android:layout_alignBottom="@+id/btStart"
+        android:layout_toRightOf="@+id/tvSpeed"
+        android:text="@string/btStop" />
+
+    <Button
+        android:id="@+id/btSImulate"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/btStart"
+        android:layout_marginTop="49dp"
+        android:layout_toLeftOf="@+id/btStop"
+        android:text="@string/btSimulate" />
 
 </RelativeLayout>

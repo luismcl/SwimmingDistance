@@ -2,6 +2,12 @@
 <resources>
 
     <string name="hello">Hello World, SwimmingDistanceActivity!</string>
-    <string name="app_name">SwimmingDistance</string>
+    <string name="app_name">Swimming Distance</string>
+    <string name="btStart">Start</string>
+    <string name="lbPollDist">Pool Dist.</string>
+    <string name="lblTripObj">Trip Objetive</string>
+    <string name="btStop">Stop</string>
+    <string name="btReset">Reset</string>
+    <string name="btSimulate">Simulate!</string>
 
 </resources>
