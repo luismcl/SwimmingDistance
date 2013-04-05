@@ -49,43 +49,51 @@
         android:inputType="number"
         android:text="25" />
 
-    <TextView
-        android:id="@+id/tvDistSwLabel"
+    <LinearLayout
+        android:id="@+id/lyDistance"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignParentLeft="true"
+        android:layout_alignParentRight="true"
         android:layout_below="@+id/etDistance"
-        android:layout_marginTop="16dp"
-        android:text="Total Distance:" />
+        android:layout_marginTop="16dp" >
 
-    <TextView
-        android:id="@+id/tvDistSw"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignBaseline="@+id/tvDistSwLabel"
-        android:layout_alignBottom="@+id/tvDistSwLabel"
-        android:layout_toRightOf="@+id/tvDistSwLabel"
-        android:layout_marginLeft="15dp"
-        android:text="0 mts." />
+        <TextView
+            android:id="@+id/tvDistSwLabel"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Total Distance:" />
 
-    <TextView
-        android:id="@+id/tvSpeedLabel"
+        <TextView
+            android:id="@+id/tvDistSw"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="15dp"
+            android:text="0 mts." />
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/lySpeed"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignParentLeft="true"
-        android:layout_below="@+id/tvDistSwLabel"
-        android:layout_marginTop="15dp"
-        android:text="Speed:" />
+        android:layout_alignParentRight="true"
+        android:layout_below="@+id/lyDistance"
+        android:layout_marginTop="15dp" >
 
-    <TextView
-        android:id="@+id/tvSpeed"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignBaseline="@+id/tvSpeedLabel"
-        android:layout_alignBottom="@+id/tvSpeedLabel"
-        android:layout_marginLeft="15dp"
-        android:layout_toRightOf="@+id/tvSpeedLabel"
-        android:text="0 m/s" />
+        <TextView
+            android:id="@+id/tvSpeedLabel"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Speed:" />
+
+        <TextView
+            android:id="@+id/tvSpeed"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="15dp"
+            android:text="0 m/s" />
+    </LinearLayout>
 
     <CheckBox
         android:id="@+id/cbSound"
@@ -99,7 +107,7 @@
         android:id="@+id/etTotalDist"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_above="@+id/tvDistSwLabel"
+        android:layout_above="@+id/lyDistance"
         android:layout_alignRight="@+id/tvTotalDistLabel"
         android:layout_toRightOf="@+id/cbSound"
         android:ems="10"
@@ -114,40 +122,68 @@
         android:text="@string/lblTripObj" />
 
     <Button
-        android:id="@+id/btStart"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignRight="@+id/etDistance"
-        android:layout_below="@+id/tvSpeedLabel"
-        android:layout_marginTop="24dp"
-        android:text="@string/btStart" />
-
-    <Button
-        android:id="@+id/btReset"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignBaseline="@+id/btStop"
-        android:layout_alignBottom="@+id/btStop"
-        android:layout_alignParentRight="true"
-        android:layout_marginRight="24dp"
-        android:text="@string/btReset" />
-
-    <Button
-        android:id="@+id/btStop"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignBaseline="@+id/btStart"
-        android:layout_alignBottom="@+id/btStart"
-        android:layout_toRightOf="@+id/tvSpeed"
-        android:text="@string/btStop" />
-
-    <Button
         android:id="@+id/btSImulate"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_below="@+id/btStart"
-        android:layout_marginTop="49dp"
-        android:layout_toLeftOf="@+id/btStop"
+        android:layout_above="@+id/cbSound"
+        android:layout_alignLeft="@+id/etTotalDist"
+        android:layout_marginLeft="19dp"
         android:text="@string/btSimulate" />
+
+    <LinearLayout
+        android:id="@+id/lyButtons"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_above="@+id/btSImulate"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentRight="true"
+        android:layout_marginBottom="48dp"
+        android:clickable="false"
+        android:orientation="horizontal"
+        android:padding="@dimen/default_gap" >
+
+        <Button
+            android:id="@+id/btStart"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="0.31"
+            android:text="@string/btStart" />
+
+        <Button
+            android:id="@+id/btStop"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="0.24"
+            android:text="@string/btStop" />
+
+        <Button
+            android:id="@+id/btReset"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="0.28"
+            android:text="@string/btReset" />
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/lyTime"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentLeft="true"
+        android:layout_below="@+id/lySpeed"
+        android:layout_marginTop="24dp" >
+
+        <TextView
+            android:id="@+id/lbTime"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/lblTotalTime"
+            android:textAppearance="?android:attr/textAppearanceLarge" />
+
+        <TextView
+            android:id="@+id/txtTotalTime"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textAppearance="?android:attr/textAppearanceLarge" />
+    </LinearLayout>
 
 </RelativeLayout>

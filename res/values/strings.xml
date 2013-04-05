@@ -9,5 +9,6 @@
     <string name="btStop">Stop</string>
     <string name="btReset">Reset</string>
     <string name="btSimulate">Simulate!</string>
+    <string name="lblTotalTime">Total Time:</string>
 
 </resources>
