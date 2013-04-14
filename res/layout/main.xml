@@ -139,8 +139,8 @@
         android:layout_alignParentRight="true"
         android:layout_marginBottom="48dp"
         android:clickable="false"
-        android:orientation="horizontal"
-        android:padding="@dimen/default_gap" >
+        android:orientation="horizontal">
+        <!--  android:padding="@dimen/default_gap" -->
 
         <Button
             android:id="@+id/btStart"
@@ -185,5 +185,32 @@
             android:layout_height="wrap_content"
             android:textAppearance="?android:attr/textAppearanceLarge" />
     </LinearLayout>
+
+    <TextView
+        android:id="@+id/tvAcc"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentRight="true"
+        android:layout_alignTop="@+id/etTotalDist"
+        android:text="Large Text"
+        android:textAppearance="?android:attr/textAppearanceLarge" />
+
+    <TextView
+        android:id="@+id/tvOri"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentRight="true"
+        android:layout_below="@+id/textView1"
+        android:text="Large Text"
+        android:textAppearance="?android:attr/textAppearanceLarge" />
+
+    <TextView
+        android:id="@+id/tvArray"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_above="@+id/btSImulate"
+        android:layout_alignParentLeft="true"
+        android:layout_marginBottom="28dp"
+        android:text="TextView" />
 
 </RelativeLayout>

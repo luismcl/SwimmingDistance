@@ -24,33 +24,32 @@ import com.swdist.R;
 
 public class SwimmingDistanceActivity extends Activity {
 
+	//Constants
+	private static final int UP = 0;
+	private static final int DOWN = 1;
+	
+	private static int SAMPLED_INTERVAL = 2000; //Time it takes to turn by compass method
+	private static int SAMPLING_RATE = 200;
+	private static int TIME_BETWEEN_CHANGES = 10000; //Minimun Lap time, should be calculated depending on Length distance
+	private static float COMPASS_THRESHOLD = 120f;
+	
 	private DistanceManager distanceManager;
 	private NotificationManager notificationManager;
+	private LapChangeManager lapChangeManager;
 
 	private SimpleDateFormat minutes = new SimpleDateFormat("mm:ss");
 
-	// Constants
-	private static final int UP = 0;
-	private static final int DOWN = 1;
-
-	// Parametrization
-	private static final long minMilis = 600;
-
 	SensorManager sensorManager;
-	Sensor accelerometerSensor;
-	boolean accelerometerPresent;
+	List<Sensor> sensorList;
+	//Sensor accelerometerSensor;
+	boolean sensorsPresent;
 
 	boolean notified = false;
-
-	int currentFace = UP;
-	int previousFace = UP;
-
-	long lastChangeUp = 0;
-	long lastChangeDown = 0;
 
 	// Layout Elements
 	Context rootContext;
 	TextView tvFace, tvLaps, tvDistSw, tvSpeed;
+	TextView tvAcc, tvOri, tvArray;
 	EditText etDistance, etTotalDist;
 	CheckBox cbSound;
 
@@ -64,11 +63,14 @@ public class SwimmingDistanceActivity extends Activity {
 	public void start() {
 		initializeSensors();
 
-		if (accelerometerPresent) {
-			sensorManager.registerListener(accelerometerListener,
-					accelerometerSensor, SensorManager.SENSOR_DELAY_NORMAL);
+		if (sensorsPresent) {
+			int i = sensorList.size();
+			sensorManager.registerListener(mySensorEventListener,
+					sensorManager.getDefaultSensor(Sensor.TYPE_ACCELEROMETER), SensorManager.SENSOR_DELAY_NORMAL);
+			sensorManager.registerListener(mySensorEventListener,
+					sensorManager.getDefaultSensor(Sensor.TYPE_ORIENTATION), SensorManager.SENSOR_DELAY_NORMAL);
 		}
-		
+
 		distanceManager = new DistanceManager();
 		distanceManager.setPoolSize(Integer.valueOf(etDistance.getText()
 				.toString()));
@@ -78,23 +80,24 @@ public class SwimmingDistanceActivity extends Activity {
 	}
 
 	public void stop() {
-		if (accelerometerPresent) {
-			sensorManager.unregisterListener(accelerometerListener);
+		if (sensorsPresent) {
+			sensorManager.unregisterListener(mySensorEventListener);
 		}
 	}
 
 	private void initializeSensors() {
 		sensorManager = (SensorManager) getSystemService(SENSOR_SERVICE);
-		List<Sensor> sensorList = sensorManager
-				.getSensorList(Sensor.TYPE_ACCELEROMETER);
+		sensorList = sensorManager
+				.getSensorList(Sensor.TYPE_ACCELEROMETER | Sensor.TYPE_ORIENTATION);
 
 		if (sensorList.size() > 0) {
-			accelerometerPresent = true;
-			accelerometerSensor = sensorList.get(0);
+			sensorsPresent = true;
+			//accelerometerSensor = sensorList.get(0);
 		} else {
-			accelerometerPresent = false;
-			tvFace.setText("No accelerometer present!");
+			sensorsPresent = false;
+			tvFace.setText("No sensor present!");
 		}
+
 	}
 
 	@Override
@@ -103,6 +106,10 @@ public class SwimmingDistanceActivity extends Activity {
 		setContentView(R.layout.main);
 
 		setLayoutElements();
+		
+		this.lapChangeManager = new LapChangeManager(SAMPLED_INTERVAL, SAMPLING_RATE, 
+													TIME_BETWEEN_CHANGES, COMPASS_THRESHOLD);
+		
 		this.notificationManager = new NotificationManager(
 				getApplicationContext());
 	}
@@ -120,8 +127,8 @@ public class SwimmingDistanceActivity extends Activity {
 		// TODO Auto-generated method stub
 		super.onStop();
 
-		if (accelerometerPresent)
-			sensorManager.unregisterListener(accelerometerListener);
+		if (sensorsPresent)
+			sensorManager.unregisterListener(mySensorEventListener);
 	}
 
 	public void setLayoutElements() {
@@ -147,17 +154,23 @@ public class SwimmingDistanceActivity extends Activity {
 
 		btSimulate = (Button) findViewById(R.id.btSImulate);
 		btSimulate.setOnClickListener(btSimulateListener);
+		
+		tvAcc = (TextView) findViewById(R.id.tvAcc); 
+		tvOri  = (TextView) findViewById(R.id.tvOri);
+		tvArray = (TextView) findViewById(R.id.tvArray);
+		
+		return;
 	}
 
 	public void updateView() {
 
-		switch (currentFace) {
-		case UP:
-			tvFace.setText("Face UP");
-			break;
-		case DOWN:
-			tvFace.setText("Face DOWN");
-			break;
+		switch (lapChangeManager.getCurrentFace()) {
+			case UP:
+				tvFace.setText("Face UP");
+				break;
+			case DOWN:
+				tvFace.setText("Face DOWN");
+				break;
 		}
 
 		tvLaps.setText(String.valueOf(distanceManager.getLaps()));
@@ -174,9 +187,32 @@ public class SwimmingDistanceActivity extends Activity {
 			notificationManager.notifyTime(distanceManager.getDistance(),
 					distanceManager.getLastFaceSpeed());
 		}
+		
+		return;
 	}
 
-	private SensorEventListener accelerometerListener = new SensorEventListener() {
+	public void newLapProcedure(){
+		distanceManager.newLap();
+		
+		if (cbSound.isChecked())
+			notificationManager
+					.playNotification(RingtoneManager.TYPE_NOTIFICATION);
+
+		if (distanceManager.getDistance() >= Integer
+				.valueOf(etTotalDist.getText().toString())
+				&& !notified) {
+			notificationManager
+					.playNotification(RingtoneManager.TYPE_ALARM);
+			notified = true;
+		}
+
+		Log.d("SD",	"Lap " + String.valueOf(distanceManager
+								.getDistance()));
+		
+		return;
+	}
+	
+	private SensorEventListener mySensorEventListener = new SensorEventListener() {
 
 		@Override
 		public void onAccuracyChanged(Sensor arg0, int arg1) {
@@ -187,50 +223,34 @@ public class SwimmingDistanceActivity extends Activity {
 		@Override
 		public void onSensorChanged(SensorEvent event) {
 
-			float z_value = event.values[2];
-			if ((int) z_value >= 0) {
-				currentFace = UP;
-			} else {
-				currentFace = DOWN;
-			}
+			Sensor sensor = event.sensor;
+            int type = sensor.getType();
 
-			// distance = (int)z_value;
-			if (currentFace != previousFace) {
-				if (currentFace == UP) {
-					lastChangeDown = System.currentTimeMillis();
-					Log.d("SD", "Up " + String.valueOf(lastChangeDown));
-				} else {
-					lastChangeUp = System.currentTimeMillis();
-					Log.d("SD", "Down " + String.valueOf(lastChangeUp));
-				}
-
-				if (Math.abs(lastChangeDown - lastChangeUp) > minMilis) {
-					if (currentFace == UP) {
-						distanceManager.newLap();
-
-						updateView();
-
-						if (cbSound.isChecked())
-							notificationManager
-									.playNotification(RingtoneManager.TYPE_NOTIFICATION);
-
-						if (distanceManager.getDistance() >= Integer
-								.valueOf(etTotalDist.getText().toString())
-								&& !notified) {
-							notificationManager
-									.playNotification(RingtoneManager.TYPE_ALARM);
-							notified = true;
-						}
-
-						Log.d("SD",
-								"Lap "
-										+ String.valueOf(distanceManager
-												.getDistance()));
-					}
-				}
-			}
-			previousFace = currentFace;
-
+            switch (type) {
+                
+            	case Sensor.TYPE_ACCELEROMETER:
+            		tvAcc.setText(String.valueOf(event.values[2]));
+            		if (lapChangeManager.lapChangeByAccelerometer(event.values[2]))
+            			newLapProcedure();
+            		
+                    break;
+                    
+            	case Sensor.TYPE_ORIENTATION:
+            		tvOri.setText(String.valueOf(event.values[0]));
+            		if (lapChangeManager.recordLecture(event.values[0]))
+            			if (lapChangeManager.lapChangeByCompass())
+            				newLapProcedure();
+            		
+            		/*String a =String.valueOf(lapChangeManager.compassLectures.length);
+            		for (int i=0 ;i<lapChangeManager.compassLectures.length; i++)
+            			a=a.concat(String.valueOf(lapChangeManager.compassLectures[i])).concat(",");
+            		tvArray.setText(a);*/
+            		
+            		break;
+            }
+            
+            updateView();
+            
 		}
 	};
 

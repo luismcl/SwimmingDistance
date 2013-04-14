@@ -36,11 +36,13 @@ public class DistanceManager {
 			last = startDate.getTime();
 		}
 		
-		long current = laps.get(laps.size()-1).getTime();
+		if (laps.size() > 0){
+			long current = laps.get(laps.size()-1).getTime();
+			Long speed = (current-last) * 100 / poolSize;
+			return speed;
+		}
 		
-		Long speed = (current-last) * 100 / poolSize;
-		
-		return speed;
+		return 0;
 	}
 	
 	public int getDistance(){
@@ -54,9 +56,13 @@ public class DistanceManager {
 		}else{
 			last = startDate.getTime();
 		}
+
+		if (laps.size() > 0){
+			long current = laps.get(laps.size()-1).getTime();
+			return current - last;
+		}
 		
-		long current = laps.get(laps.size()-1).getTime();
-		return current - last;
+		return 0;
 	}
 	
 	public Long getTotalTime(){
