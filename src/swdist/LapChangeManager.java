@@ -63,15 +63,13 @@ public class LapChangeManager {
 	 * 			false -> If not
 	 */
 	public boolean recordLecture(float _compassLecture){		
-		long curTime = System.currentTimeMillis();
-		
+		long curTime = System.currentTimeMillis();		
 		long diff = curTime - (lastRecordTime + sampligRate);
-		//Log.d("SD",lastRecordTime + sampligRate +"," + curTime);
-		Log.d("SD", String.valueOf(diff));
+		
+		//Log.d("SD", String.valueOf(diff));
 		
 		if (diff > 0){
 			
-			Log.d("SD","true");
 			currentLecture++;
 			
 			if (currentLecture >= lecturesSize )
@@ -137,6 +135,7 @@ public class LapChangeManager {
 				((lastLapChange + timeBetweenChanges) > curTime)){
 				if (currentFace == UP) {
 					newLap = true;
+					lastLapChange = curTime;
 				}
 			}
 		}
