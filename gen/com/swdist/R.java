@@ -19,6 +19,7 @@ public final class R {
         public static final int btStart=0x7f050011;
         public static final int btStop=0x7f050012;
         public static final int cbSound=0x7f05000c;
+        public static final int chronometer1=0x7f05001b;
         public static final int etDistance=0x7f050005;
         public static final int etTotalDist=0x7f05000d;
         public static final int face=0x7f050002;

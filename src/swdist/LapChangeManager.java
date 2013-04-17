@@ -55,6 +55,16 @@ public class LapChangeManager {
 		return currentFace;
 	}
 	
+	
+	
+	public long getLastLapChange() {
+		return lastLapChange;
+	}
+
+	public void setLastLapChange(long lastLapChange) {
+		this.lastLapChange = lastLapChange;
+	}
+
 	/**
 	 * Save the last compass lecture in a cyclic array
 	 * and update the last record time
