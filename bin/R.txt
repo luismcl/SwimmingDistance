@@ -23,6 +23,7 @@ int id cbSound 0x7f04001d
 int id center 0x7f04000c
 int id center_horizontal 0x7f04000a
 int id center_vertical 0x7f040008
+int id chronometer1 0x7f04002c
 int id clip_horizontal 0x7f04000f
 int id clip_vertical 0x7f04000e
 int id end 0x7f040011

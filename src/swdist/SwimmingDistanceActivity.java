@@ -13,10 +13,12 @@ import android.hardware.SensorEventListener;
 import android.hardware.SensorManager;
 import android.media.RingtoneManager;
 import android.os.Bundle;
+import android.os.SystemClock;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.CheckBox;
+import android.widget.Chronometer;
 import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -51,6 +53,7 @@ public class SwimmingDistanceActivity extends Activity {
 	// Layout Elements
 	Context rootContext;
 	TextView tvLaps, tvDistSw, tvSpeed;
+	Chronometer myChrono;
 	TextView tvAcc, tvOri, tvArray;
 	EditText etDistance, etTotalDist;
 	CheckBox cbSound;
@@ -158,9 +161,11 @@ public class SwimmingDistanceActivity extends Activity {
 
 		btSimulate = (Button) findViewById(R.id.btSImulate);
 		btSimulate.setOnClickListener(btSimulateListener);
-
-		tvAcc = (TextView) findViewById(R.id.tvAcc);
-		tvOri = (TextView) findViewById(R.id.tvOri);
+		
+		myChrono = (Chronometer) findViewById(R.id.chronometer1);
+		
+		tvAcc = (TextView) findViewById(R.id.tvAcc); 
+		tvOri  = (TextView) findViewById(R.id.tvOri);
 		tvArray = (TextView) findViewById(R.id.tvArray);
 
 		return;
@@ -183,8 +188,7 @@ public class SwimmingDistanceActivity extends Activity {
 		distanceManager.newLap();
 
 		if (cbSound.isChecked())
-			notificationManager
-					.playNotification(RingtoneManager.TYPE_NOTIFICATION);
+			notificationManager.playNotification(RingtoneManager.TYPE_NOTIFICATION);
 
 		if (distanceManager.getDistance() >= Integer.valueOf(etTotalDist
 				.getText().toString()) && !notified) {
@@ -199,7 +203,7 @@ public class SwimmingDistanceActivity extends Activity {
 						+ distanceManager.getLaps() + " Speed:"
 						+ distanceManager.getSpeed());
 
-		if (distanceManager.getDistance() % 100 == 0) {
+		if (cbSound.isChecked() && distanceManager.getDistance() % 100 == 0) {
 			notificationManager.notifyTime(distanceManager.getDistance(),
 					distanceManager.getLastFaceSpeed());
 		}
@@ -244,6 +248,8 @@ public class SwimmingDistanceActivity extends Activity {
 	View.OnClickListener btStartListener = new View.OnClickListener() {
 		public void onClick(View v) {
 			Toast.makeText(rootContext, "Start!", Toast.LENGTH_SHORT).show();
+			myChrono.setBase(SystemClock.elapsedRealtime());
+			myChrono.start();
 			start();
 		}
 	};
@@ -251,6 +257,7 @@ public class SwimmingDistanceActivity extends Activity {
 	View.OnClickListener btStopListener = new View.OnClickListener() {
 		public void onClick(View v) {
 			Toast.makeText(rootContext, "Stop!", Toast.LENGTH_SHORT).show();
+			myChrono.stop();
 			stop();
 		}
 	};
@@ -261,7 +268,7 @@ public class SwimmingDistanceActivity extends Activity {
 			tvLaps.setText("0");
 			tvDistSw.setText("0 mts");
 			tvSpeed.setText("0 minutos por 100mts");
-			txtTotalTime.setText("");
+			myChrono.setBase(SystemClock.elapsedRealtime());
 		}
 	};
 
