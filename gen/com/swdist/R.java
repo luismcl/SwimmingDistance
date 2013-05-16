@@ -230,7 +230,7 @@ containing a value of this type.
         public static final int center=0x7f04000c;
         public static final int center_horizontal=0x7f04000a;
         public static final int center_vertical=0x7f040008;
-        public static final int chronometer1=0x7f04002c;
+        public static final int chronometer1=0x7f040027;
         public static final int clip_horizontal=0x7f04000f;
         public static final int clip_vertical=0x7f04000e;
         public static final int end=0x7f040011;
@@ -262,7 +262,6 @@ containing a value of this type.
         public static final int tvSpeed=0x7f04001c;
         public static final int tvSpeedLabel=0x7f04001b;
         public static final int tvTotalDistLabel=0x7f04001f;
-        public static final int txtTotalTime=0x7f040027;
         public static final int vertical=0x7f040001;
     }
     public static final class layout {

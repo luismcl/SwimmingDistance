@@ -148,8 +148,6 @@ public class SwimmingDistanceActivity extends Activity {
 		etTotalDist = (EditText) findViewById(R.id.etTotalDist);
 		cbSound = (CheckBox) findViewById(R.id.cbSound);
 
-		txtTotalTime = (TextView) findViewById(R.id.txtTotalTime);
-
 		btStart = (Button) findViewById(R.id.btStart);
 		btStart.setOnClickListener(btStartListener);
 

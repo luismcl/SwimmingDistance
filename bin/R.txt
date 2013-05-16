@@ -23,7 +23,7 @@ int id cbSound 0x7f04001d
 int id center 0x7f04000c
 int id center_horizontal 0x7f04000a
 int id center_vertical 0x7f040008
-int id chronometer1 0x7f04002c
+int id chronometer1 0x7f040027
 int id clip_horizontal 0x7f04000f
 int id clip_vertical 0x7f04000e
 int id end 0x7f040011
@@ -55,7 +55,6 @@ int id tvOri 0x7f040029
 int id tvSpeed 0x7f04001c
 int id tvSpeedLabel 0x7f04001b
 int id tvTotalDistLabel 0x7f04001f
-int id txtTotalTime 0x7f040027
 int id vertical 0x7f040001
 int layout main 0x7f030000
 int string app_name 0x7f060001

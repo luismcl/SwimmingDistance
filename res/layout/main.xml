@@ -173,11 +173,11 @@
             android:text="@string/lblTotalTime"
             android:textAppearance="?android:attr/textAppearanceLarge" />
 
-        <TextView
-            android:id="@+id/txtTotalTime"
+        <Chronometer
+            android:id="@+id/chronometer1"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:textAppearance="?android:attr/textAppearanceLarge" />
+            android:text="Chronometer" />
     </LinearLayout>
 
     <TextView
@@ -206,13 +206,5 @@
         android:layout_alignParentLeft="true"
         android:layout_marginBottom="28dp"
         android:text="TextView" />
-
-    <Chronometer
-        android:id="@+id/chronometer1"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignParentLeft="true"
-        android:layout_below="@+id/lyTime"
-        android:text="Chronometer" />
 
 </RelativeLayout>
