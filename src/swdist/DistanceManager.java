@@ -1,71 +1,89 @@
 package swdist;
 
-import java.util.ArrayList;
 import java.util.Date;
-import java.util.List;
+
+import swdist.model.Workout;
+import android.content.Context;
 
 public class DistanceManager {
+	
+	
+	public FileManager fileManager = new FileManager();
 
-	private Date startDate;
-	private List<Date> laps = new ArrayList<Date>();
+	private Workout workout;
+
 	private int poolSize = 25;
-	
-	public void newLap(){
-		laps.add(new Date());
+
+
+	public void start() {
+		workout = new Workout();
 	}
+
+	public DistanceManager(Context context) {
 	
+	}
+
+	public void newLap() {
+		workout.newLap(poolSize, new Date());
+	}
+
 	public void setPoolSize(int poolSize) {
 		this.poolSize = poolSize;
 	}
-	
-	public void start(){
-		laps = new ArrayList<Date>();
-		startDate = new Date();
+
+	public int getLaps() {
+		return workout.getLaps().size();
 	}
-	
-	public int getLaps(){
-		return laps.size();
-	}
-	
-	public long getSpeed(){
-		
+
+	public long getSpeed() {
+
 		long last;
-		if (laps.size() > 1){
-			last = laps.get(laps.size()-2).getTime();
-		}else{
-			last = startDate.getTime();
-		}
-		
-		if (laps.size() > 0){
-			long current = laps.get(laps.size()-1).getTime();
-			Long speed = (current-last) * 100 / poolSize;
-			return speed;
-		}
-		
-		return 0;
-	}
-	
-	public int getDistance(){
-		return laps.size() * poolSize;
-	}
-	
-	public long getLastFaceSpeed(){
-		long last;
-		if (laps.size() > 4){
-			last = laps.get(laps.size()-4).getTime();
-		}else{
-			last = startDate.getTime();
+
+		if (workout.getLaps().size() > 1) {
+			last = workout.getLaps().get(workout.getLaps().size() - 2)
+					.getTimeStamp().getTime();
+		} else {
+			last = workout.getStartDate().getTime();
 		}
 
-		if (laps.size() > 0){
-			long current = laps.get(laps.size()-1).getTime();
-			return current - last;
+		if (workout.getLaps().size() > 0) {
+			long current = workout.getLaps().get(workout.getLaps().size() - 1)
+					.getTimeStamp().getTime();
+			Long speed = (current - last) * 100 / poolSize;
+			return speed;
 		}
-		
+
 		return 0;
 	}
-	
-	public Long getTotalTime(){
-		return new Date().getTime() - startDate.getTime();
+
+	public int getDistance() {
+		return workout.getDistance();
+	}
+
+	public long getLastFaceSpeed() {
+		long last;
+		if (workout.getLaps().size() > 4) {
+			last = workout.getLaps().get(workout.getLaps().size() - 4)
+					.getTimeStamp().getTime();
+		} else {
+			last = workout.getStartDate().getTime();
+		}
+
+		if (workout.getLaps().size() > 0) {
+			long current = workout.getLaps().get(workout.getLaps().size() - 1)
+					.getTimeStamp().getTime();
+			return current - last;
+		}
+
+		return 0;
+	}
+
+	public Long getTotalTime() {
+		return new Date().getTime() - workout.getStartDate().getTime();
+	}
+
+	public void save() {
+		fileManager.writeFile(workout.getStartDate().getTime() +  "_WorkOut.json", workout);
+		
 	}
 }
